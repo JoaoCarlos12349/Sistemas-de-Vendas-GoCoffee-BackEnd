@@ -1,0 +1,58 @@
+package SVGoCoffee.SVGoCoffee.dto;
+
+import java.sql.Date;
+
+import SVGoCoffee.SVGoCoffee.entities.Pedido;
+import SVGoCoffee.SVGoCoffee.entities.SituacaoMesa;
+
+public class PedidoDTO {
+
+    private Long id;
+    private Date data;
+    private Integer mesa;
+    private SituacaoMesa situacao;
+    private Double valorTotal;
+    private Integer pontos;
+    private Long usuario_id;
+
+    public PedidoDTO() {
+    }
+
+    public PedidoDTO(Pedido pedido) {
+        this.data = pedido.getData();
+        this.mesa = pedido.getMesa();
+        this.situacao = pedido.getSituacao();
+        this.valorTotal = pedido.getValorTotal();
+        this.pontos = pedido.getPontos();
+        this.usuario_id = pedido.getUsuario().getId();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public Integer getMesa() {
+        return mesa;
+    }
+
+    public SituacaoMesa getSituacao() {
+        return situacao;
+    }
+
+    public Double getValorTotal() {
+        return valorTotal;
+    }
+
+    public Integer getPontos() {
+        return pontos;
+    }
+
+    public Long getUsuario_id() {
+        return usuario_id;
+    }
+
+}

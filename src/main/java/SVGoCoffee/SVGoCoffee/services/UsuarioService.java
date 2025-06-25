@@ -3,35 +3,36 @@ package SVGoCoffee.SVGoCoffee.services;
 
 import SVGoCoffee.SVGoCoffee.dto.UsuarioDTO;
 import SVGoCoffee.SVGoCoffee.entities.Pessoa;
+import SVGoCoffee.SVGoCoffee.entities.TipoUsuario;
 import SVGoCoffee.SVGoCoffee.entities.Usuario;
 import SVGoCoffee.SVGoCoffee.repositories.PessoaRepository;
 import SVGoCoffee.SVGoCoffee.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     private PessoaRepository pessoaRepository;
 
-    public List<UsuarioDTO> findAll() {
-        return usuarioRepository.findAll().stream().map(UsuarioDTO::new).collect(Collectors.toList());
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public UsuarioDTO findById(Long id) {
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com ID: " + id));
-        return new UsuarioDTO(usuario);
+    public List<Usuario> listarUsuarios() {
+        return usuarioRepository.findAll();
     }
 
-    public UsuarioDTO insert(UsuarioDTO usuarioDTO) {
+    public Usuario criarUsuario(UsuarioDTO usuarioDTO) {
 
         Pessoa pessoa = pessoaRepository.findById(usuarioDTO.getPessoa_id())
                 .orElseThrow(
@@ -40,15 +41,17 @@ public class UsuarioService {
 
         Usuario usuario = new Usuario();
         usuario.setLogin(usuarioDTO.getLogin());
-        usuario.setSenha(usuarioDTO.getSenha());
+        usuario.setSenha(passwordEncoder.encode(usuarioDTO.getSenha()));
+        usuario.setTipoUsuario(TipoUsuario.valueOf(usuarioDTO.getTipoUsuario()));
+        if (pessoaRepository.findAll().isEmpty()) {
+            
+        }
         usuario.setPessoa(pessoa);
-        usuario.setTipoUsuario(usuarioDTO.getTipoUsuario());
 
-        Usuario usuarioSalvo = usuarioRepository.save(usuario);
-        return new UsuarioDTO(usuarioSalvo);
+        return usuarioRepository.save(usuario);
     }
 
-    public UsuarioDTO update(Long id, UsuarioDTO usuarioDTO) {
+    public Usuario update(Long id, UsuarioDTO usuarioDTO) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com ID: " + id));
 
@@ -58,12 +61,11 @@ public class UsuarioService {
                                 "Cliente não encontrado com ID: " + usuarioDTO.getPessoa_id()));
 
         usuario.setLogin(usuarioDTO.getLogin());
-        usuario.setSenha(usuarioDTO.getSenha());
+        usuario.setSenha(passwordEncoder.encode(usuarioDTO.getSenha()));
         usuario.setPessoa(pessoa);
-        usuario.setTipoUsuario(usuarioDTO.getTipoUsuario());
+        usuario.setTipoUsuario(TipoUsuario.valueOf(usuarioDTO.getTipoUsuario()));
 
-        Usuario usuarioAtualizado = usuarioRepository.save(usuario);
-        return new UsuarioDTO(usuarioAtualizado);
+        return usuarioRepository.save(usuario);
 
     }
 

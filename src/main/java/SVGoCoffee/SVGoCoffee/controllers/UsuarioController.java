@@ -1,48 +1,48 @@
 package SVGoCoffee.SVGoCoffee.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import SVGoCoffee.SVGoCoffee.dto.UsuarioDTO;
+import SVGoCoffee.SVGoCoffee.entities.Usuario;
 import SVGoCoffee.SVGoCoffee.services.UsuarioService;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> findById(@PathVariable Long id) {
-        UsuarioDTO usuarioDTO = usuarioService.findById(id);
-        return ResponseEntity.ok(usuarioDTO);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<UsuarioDTO>> findAll() {
-        List<UsuarioDTO> usuarios = usuarioService.findAll();
-        return ResponseEntity.ok(usuarios);
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> create(@RequestBody UsuarioDTO usuarioDTO) {
-        UsuarioDTO usuarioNovo = usuarioService.insert(usuarioDTO);
-        return ResponseEntity.status(201).body(usuarioNovo);
+    public ResponseEntity<?> criarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+        try {
+            Usuario usuarioNovo = usuarioService.criarUsuario(usuarioDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(usuarioNovo);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> update(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
-        UsuarioDTO usuarioAtualizado = usuarioService.update(id, usuarioDTO);
+    public ResponseEntity<?> alteraUsuario(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
+        Usuario usuarioAtualizado = usuarioService.update(id, usuarioDTO);
         return ResponseEntity.ok(usuarioAtualizado);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        usuarioService.delete(id);
-        return ResponseEntity.noContent().build();
+    @GetMapping
+    public List<Usuario> listaUsuarios(){
+        return usuarioService.listarUsuarios();
     }
 }

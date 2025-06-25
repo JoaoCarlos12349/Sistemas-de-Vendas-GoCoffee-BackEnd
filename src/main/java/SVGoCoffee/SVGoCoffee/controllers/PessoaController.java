@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +36,7 @@ public class PessoaController {
         List<PessoaDTO> pessoas = pessoaService.findAll();
         return ResponseEntity.ok(pessoas);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<PessoaDTO> create(@RequestBody PessoaDTO pessoaDTO) {
         PessoaDTO pessoaNovo = pessoaService.insert(pessoaDTO);

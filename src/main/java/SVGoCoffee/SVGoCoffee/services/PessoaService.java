@@ -26,7 +26,7 @@ public class PessoaService {
                 .orElseThrow(() -> new EntityNotFoundException("Pessoa não encontrada com ID: " + id));
         return new PessoaDTO(pessoa);
     }
-
+    
     public PessoaDTO insert(PessoaDTO pessoaDTO) {
 
         Pessoa pessoa = new Pessoa();

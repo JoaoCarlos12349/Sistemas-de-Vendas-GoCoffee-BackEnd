@@ -53,6 +53,7 @@ public class ManipuladorDeExcecoes {
         return ResponseEntity.status(status).body(erro);
     }
 
+    @ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<ErroResposta> duplicateKeyException(DuplicateKeyException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.CONFLICT;
         ErroResposta erro = new ErroResposta();

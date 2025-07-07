@@ -1,7 +1,6 @@
 package SVGoCoffee.SVGoCoffee.entities;
 
-import java.sql.Date;
-
+import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,7 +21,7 @@ public class Pedido {
     private Long id;
 
     @Column(nullable = false)
-    private Date data;
+    private LocalDateTime data;
 
     @Column(nullable = false)
     private Integer mesa;
@@ -44,7 +43,7 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(Long id, Date data, Integer mesa, SituacaoMesa situacao, Double valorTotal, Integer pontos,
+    public Pedido(Long id, LocalDateTime data, Integer mesa, SituacaoMesa situacao, Double valorTotal, Integer pontos,
             Usuario usuario) {
         this.id = id;
         this.data = data;
@@ -63,11 +62,11 @@ public class Pedido {
         this.id = id;
     }
 
-    public Date getData() {
+    public LocalDateTime getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDateTime data) {
         this.data = data;
     }
 
@@ -110,5 +109,4 @@ public class Pedido {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
 }

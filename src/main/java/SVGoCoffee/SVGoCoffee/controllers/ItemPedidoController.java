@@ -24,6 +24,4 @@ public class ItemPedidoController {
     public ItemPedidoDTO salvar(@RequestBody ItemPedidoDTO dto) {
         return itemPedidoService.salvar(dto);
     }
-}{
-
 }

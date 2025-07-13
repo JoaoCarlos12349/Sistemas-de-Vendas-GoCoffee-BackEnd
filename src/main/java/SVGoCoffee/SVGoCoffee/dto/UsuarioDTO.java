@@ -1,6 +1,5 @@
 package SVGoCoffee.SVGoCoffee.dto;
 
-import SVGoCoffee.SVGoCoffee.entities.TipoUsuario;
 import SVGoCoffee.SVGoCoffee.entities.Usuario;
 
 public class UsuarioDTO {

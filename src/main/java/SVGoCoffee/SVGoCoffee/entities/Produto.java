@@ -11,25 +11,55 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String nome;
 
+    @Column(nullable = false)
     private Double preco;
 
+    @Column(nullable = false)
     private String categoria;
 
+    public Produto() {
+    }
+
+    public Produto(Long id, String nome, Double preco, String categoria) {
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
+        this.categoria = categoria;
+    }
+
     public Long getId() {
-        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+        return id;
     }
 
-    public Double getPreco() {
-        throw new UnsupportedOperationException("Unimplemented method 'getPreco'");
-    }
-
-    public String getCategoria() {
-        throw new UnsupportedOperationException("Unimplemented method 'getCategoria'");
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
-        throw new UnsupportedOperationException("Unimplemented method 'getNome'");
+        return nome;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
 }

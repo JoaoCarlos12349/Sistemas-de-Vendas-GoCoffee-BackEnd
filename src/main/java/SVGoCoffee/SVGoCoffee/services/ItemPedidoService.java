@@ -1,5 +1,6 @@
 package SVGoCoffee.SVGoCoffee.services;
 
+import SVGoCoffee.SVGoCoffee.dto.ItemPedidoDTO;
 import SVGoCoffee.SVGoCoffee.entities.ItemPedido;
 import SVGoCoffee.SVGoCoffee.entities.Pedido;
 import SVGoCoffee.SVGoCoffee.entities.Produto;

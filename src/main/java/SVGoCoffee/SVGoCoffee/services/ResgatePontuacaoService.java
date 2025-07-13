@@ -24,39 +24,31 @@ public class ResgatePontuacaoService {
 
     public List<ResgatePontuacaoDTO> listarTodos() {
         return resgatePontuacaoRepository.findAll().stream()
-                .map(this::toDTO)
+                .map(ResgatePontuacaoDTO::new)
                 .collect(Collectors.toList());
     }
 
-    public ResgatePontuacaoDTO salvar(ResgatePontuacaoDTO dto) {
-        Pessoa pessoa = pessoaRepository.findById(dto.getIdPessoa())
+    public ResgatePontuacaoDTO salvar(ResgatePontuacaoDTO resgatePontuacaoDTO) {
+        Pessoa pessoa = pessoaRepository.findById(resgatePontuacaoDTO.getPessoa_id())
                 .orElseThrow(() -> new RuntimeException("Pessoa não encontrada"));
 
-        if (pessoa.getPontuacao() < dto.getPontosResgatados()) {
+        if (pessoa.getPontuacao() < resgatePontuacaoDTO.getPontosResgatados()) {
             throw new RuntimeException("Pontuação insuficiente");
         }
 
         // Atualizar pontuação da pessoa
-        pessoa.setPontuacao(pessoa.getPontuacao() - dto.getPontosResgatados());
+        pessoa.setPontuacao(pessoa.getPontuacao() - resgatePontuacaoDTO.getPontosResgatados());
         pessoaRepository.save(pessoa);
 
         // Salvar o resgate
         ResgatePontuacao resgate = new ResgatePontuacao();
-        resgate.setPontosResgatados(dto.getPontosResgatados());
-        resgate.setTipoResgate(dto.getTipoResgate());
+        resgate.setPontosResgatados(resgatePontuacaoDTO.getPontosResgatados());
+        resgate.setTipoResgate(resgatePontuacaoDTO.getTipoResgate());
         resgate.setData(LocalDateTime.now());
         resgate.setPessoa(pessoa);
 
         ResgatePontuacao salvo = resgatePontuacaoRepository.save(resgate);
-        return toDTO(salvo);
+        return new ResgatePontuacaoDTO(salvo);
     }
 
-    private ResgatePontuacaoDTO toDTO(ResgatePontuacao r) {
-        return new ResgatePontuacaoDTO(
-                r.getId(),
-                r.getPontosResgatados(),
-                r.getTipoResgate(),
-                r.getData(),
-                r.getPessoa().getId());
-    }
 }

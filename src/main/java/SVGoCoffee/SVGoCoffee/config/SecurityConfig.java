@@ -43,7 +43,7 @@ public class SecurityConfig {
                                                                                                               // ao
                                                                                                               // Swagger
                                                                                                               // UI
-                        .requestMatchers(HttpMethod.POST, "/pessoas").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/pessoas").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuarios").permitAll() // Permitir criação de usuário
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll() // Permitir endpoint de login
 

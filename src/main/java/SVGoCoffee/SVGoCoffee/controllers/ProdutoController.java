@@ -1,11 +1,13 @@
 package SVGoCoffee.SVGoCoffee.controllers;
 
 import SVGoCoffee.SVGoCoffee.dto.ProdutoDTO;
+import SVGoCoffee.SVGoCoffee.dto.ProdutoRequestDTO;
 import SVGoCoffee.SVGoCoffee.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -27,13 +29,13 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<ProdutoDTO> salvar(@RequestBody ProdutoDTO dto) {
+    public ResponseEntity<ProdutoDTO> salvar(@ModelAttribute ProdutoRequestDTO dto) throws IOException {
         ProdutoDTO novoProduto = produtoService.salvar(dto);
         return ResponseEntity.status(201).body(novoProduto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProdutoDTO> update(@PathVariable Long id, @RequestBody ProdutoDTO dto) {
+    public ResponseEntity<ProdutoDTO> update(@PathVariable Long id, @RequestBody ProdutoRequestDTO dto) throws IOException {
         ProdutoDTO produtoAtualizado = produtoService.update(id, dto);
         return ResponseEntity.ok(produtoAtualizado);
     }

@@ -39,11 +39,12 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/h2-console/**").permitAll() // Acesso ao H2
                                                                                                   // Console
-                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() // Acesso
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html","/img/**").permitAll() // Acesso
                                                                                                               // ao
                                                                                                               // Swagger
                                                                                                               // UI
                         .requestMatchers(HttpMethod.POST, "/pessoas").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/produtos").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuarios").permitAll() // Permitir criação de usuário
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll() // Permitir endpoint de login
 

@@ -20,14 +20,26 @@ public class Produto {
     @Column(nullable = false)
     private String categoria;
 
+    @Column(nullable = false)
+    private String imagem;
+
     public Produto() {
     }
 
-    public Produto(Long id, String nome, Double preco, String categoria) {
+    public Produto(Long id, String nome, Double preco, String categoria, String imagem) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
         this.categoria = categoria;
+        this.imagem = imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
+
+    public String getImagem() {
+        return imagem;
     }
 
     public Long getId() {

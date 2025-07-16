@@ -1,1 +1,2 @@
 INSERT INTO tb_Pessoa (nome, sexo, endereco, pontuacao) VALUES ('Maria', 'F', 'Rua das Flores, 123', 0);
+INSERT INTO tb_usuario (login, tipo_usuario, senha, pessoa_id) VALUES ('admin', 'ADMIN', 'admin', 1);

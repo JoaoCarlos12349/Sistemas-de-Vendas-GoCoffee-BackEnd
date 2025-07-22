@@ -40,12 +40,14 @@ public class ItemPedidoService {
                 .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com ID: " + dto.getIdProduto()));
 
         ItemPedido itemPedido = new ItemPedido();
+        produto.setEstoque(produto.getEstoque() - dto.getQuantidade());
         itemPedido.setQuantidade(dto.getQuantidade());
         itemPedido.setSubtotal(dto.getSubtotal());
         itemPedido.setPedido(pedido);
         itemPedido.setProduto(produto);
 
         ItemPedido salvo = itemPedidoRepository.save(itemPedido);
+        produtoRepository.save(produto);
         return new ItemPedidoDTO(salvo);
     }
 
@@ -67,10 +69,12 @@ public class ItemPedidoService {
 
         itemPedido.setQuantidade(dto.getQuantidade());
         itemPedido.setSubtotal(dto.getSubtotal());
+        produto.setEstoque(produto.getEstoque() - dto.getQuantidade());
         itemPedido.setPedido(pedido);
         itemPedido.setProduto(produto);
 
         ItemPedido atualizado = itemPedidoRepository.save(itemPedido);
+        produtoRepository.save(produto);
         return new ItemPedidoDTO(atualizado);
     }
 

@@ -7,7 +7,7 @@ import SVGoCoffee.SVGoCoffee.entities.SituacaoMesa;
 public class PedidoDTO {
 
     private Long id;
-    private Date data;
+    private String data;
     private Integer mesa;
     private SituacaoMesa situacao;
     private Double valorTotal;
@@ -35,7 +35,7 @@ public class PedidoDTO {
         return id;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 

@@ -22,8 +22,8 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date data;
+    @Column(nullable = false)
+    private String data;
 
     @Column(nullable = false)
     private Integer mesa;
@@ -48,7 +48,7 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(Long id, Date data, Integer mesa, SituacaoMesa situacao, Double valorTotal, String formaPagamento,
+    public Pedido(Long id, String data, Integer mesa, SituacaoMesa situacao, Double valorTotal, String formaPagamento,
             Integer pontos, Usuario usuario) {
         this.id = id;
         this.data = data;
@@ -116,11 +116,11 @@ public class Pedido {
         this.formaPagamento = formaPagamento;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 }

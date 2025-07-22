@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 
 import SVGoCoffee.SVGoCoffee.dto.PedidoDTO;
 import SVGoCoffee.SVGoCoffee.entities.Pedido;
+import SVGoCoffee.SVGoCoffee.entities.Pessoa;
 import SVGoCoffee.SVGoCoffee.entities.SituacaoMesa;
 import SVGoCoffee.SVGoCoffee.entities.Usuario;
 import SVGoCoffee.SVGoCoffee.repositories.PedidoRepository;
+import SVGoCoffee.SVGoCoffee.repositories.PessoaRepository;
 import SVGoCoffee.SVGoCoffee.repositories.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -21,6 +23,9 @@ public class PedidoService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private PessoaRepository pessoaRepository;
 
     public List<PedidoDTO> findAll() {
         List<Pedido> listaPedidos = pedidoRepository.findAll();
@@ -39,8 +44,12 @@ public class PedidoService {
                 .orElseThrow(
                         () -> new EntityNotFoundException(
                                 "Usuario não encontrado com ID: " + pedidoDTO.getUsuario_id()));
+        Pessoa pessoa = pessoaRepository.findById(usuario.getPessoa().getId())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Pessoa não encontrada com ID: " + usuario.getPessoa().getId()));
 
         Pedido pedido = new Pedido();
+        pessoa.setPontuacao(pessoa.getPontuacao() + pedidoDTO.getPontos());
         pedido.setData(pedidoDTO.getData());
         pedido.setMesa(pedidoDTO.getMesa());
         pedido.setUsuario(usuario);
@@ -52,6 +61,7 @@ public class PedidoService {
         pedido.setValorTotal(pedidoDTO.getValorTotal());
 
         Pedido pedidoSalvo = pedidoRepository.save(pedido);
+        pessoaRepository.save(pessoa);
         return new PedidoDTO(pedidoSalvo);
     }
 
@@ -64,8 +74,6 @@ public class PedidoService {
                 .orElseThrow(
                         () -> new EntityNotFoundException(
                                 "Usuario não encontrado com ID: " + pedidoDTO.getUsuario_id()));
-
-
 
         pedido.setData(pedidoDTO.getData());
         pedido.setMesa(pedidoDTO.getMesa());

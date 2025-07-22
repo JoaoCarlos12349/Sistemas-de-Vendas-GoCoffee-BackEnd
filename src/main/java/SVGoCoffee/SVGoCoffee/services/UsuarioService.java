@@ -52,17 +52,11 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado com ID: " + id));
 
-        Pessoa pessoa = pessoaRepository.findById(usuarioDTO.getPessoa_id())
-                .orElseThrow(
-                        () -> new EntityNotFoundException(
-                                "Pessoa não encontrada com ID: " + usuarioDTO.getPessoa_id()));
-
         usuario.setLogin(usuarioDTO.getLogin());
 
         if (usuarioDTO.getSenha() != null && !usuarioDTO.getSenha().isEmpty()) {
             usuario.setSenha(passwordEncoder.encode(usuarioDTO.getSenha()));
         }
-        usuario.setPessoa(pessoa);
         usuario.setTipoUsuario(TipoUsuario.valueOf(usuarioDTO.getTipoUsuario()));
 
         return usuarioRepository.save(usuario);

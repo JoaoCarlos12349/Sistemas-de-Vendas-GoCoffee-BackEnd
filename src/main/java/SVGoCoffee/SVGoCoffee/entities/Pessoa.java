@@ -23,17 +23,21 @@ public class Pessoa {
     @Column(nullable = false)
     private String endereco;
 
+    @Column(nullable = false, unique = true)
+    private String cpf;
+
     @Column(nullable = false)
     private Integer pontuacao;
 
     public Pessoa() {
     }
 
-    public Pessoa(Long id, String nome, String sexo, String endereco, Integer pontuacao) {
+    public Pessoa(Long id, String nome, String sexo, String endereco, String cpf, Integer pontuacao) {
         this.id = id;
         this.nome = nome;
         this.sexo = sexo;
         this.endereco = endereco;
+        this.cpf = cpf;
         this.pontuacao = pontuacao;
     }
 
@@ -75,6 +79,14 @@ public class Pessoa {
 
     public void setPontuacao(Integer pontuacao) {
         this.pontuacao = pontuacao;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
 }

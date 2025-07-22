@@ -26,12 +26,17 @@ public class PessoaService {
                 .orElseThrow(() -> new EntityNotFoundException("Pessoa não encontrada com ID: " + id));
         return new PessoaDTO(pessoa);
     }
-    
-    public PessoaDTO insert(PessoaDTO pessoaDTO) {
+
+    public PessoaDTO insert(PessoaDTO pessoaDTO) throws Exception {
 
         Pessoa pessoa = new Pessoa();
         pessoa.setNome(pessoaDTO.getNome());
         pessoa.setSexo(pessoaDTO.getSexo());
+        if (pessoaRepository.existsByCpf(pessoaDTO.getCpf())) {
+            throw new Exception("Usuario já cadastrado!");
+        } else {
+            pessoa.setCpf(pessoaDTO.getCpf());
+        }
         pessoa.setEndereco(pessoaDTO.getEndereco());
         pessoa.setPontuacao(Integer.valueOf(0));
 
@@ -39,13 +44,21 @@ public class PessoaService {
         return new PessoaDTO(pessoaSalvo);
     }
 
-    public PessoaDTO update(Long id, PessoaDTO pessoaDTO) {
+    public PessoaDTO update(Long id, PessoaDTO pessoaDTO) throws Exception {
         Pessoa pessoa = pessoaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Pessoa não encontrada com ID: " + id));
 
         pessoa.setNome(pessoaDTO.getNome());
         pessoa.setSexo(pessoaDTO.getSexo());
         pessoa.setEndereco(pessoaDTO.getEndereco());
+
+        if (!pessoa.getCpf().equals(pessoaDTO.getCpf())) {
+            if (pessoaRepository.existsByCpf(pessoaDTO.getCpf())) {
+                throw new Exception("Usuario já cadastrado!");
+            } else {
+                pessoa.setCpf(pessoaDTO.getCpf());
+            }
+        }
 
         if (pessoaDTO.getPontuacao() != null) {
             pessoa.setPontuacao(pessoaDTO.getPontuacao());

@@ -38,13 +38,13 @@ public class PessoaController {
     }
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<PessoaDTO> create(@RequestBody PessoaDTO pessoaDTO) {
+    public ResponseEntity<PessoaDTO> create(@RequestBody PessoaDTO pessoaDTO) throws Exception {
         PessoaDTO pessoaNovo = pessoaService.insert(pessoaDTO);
         return ResponseEntity.status(201).body(pessoaNovo);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PessoaDTO> update(@PathVariable Long id, @RequestBody PessoaDTO pessoaDTO) {
+    public ResponseEntity<PessoaDTO> update(@PathVariable Long id, @RequestBody PessoaDTO pessoaDTO) throws Exception {
         PessoaDTO pessoaAtualizado = pessoaService.update(id, pessoaDTO);
         return ResponseEntity.ok(pessoaAtualizado);
     }

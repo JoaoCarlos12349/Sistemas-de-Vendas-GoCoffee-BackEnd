@@ -7,6 +7,7 @@ public class PessoaDTO {
     private Long id;
     private String nome;
     private String sexo;
+    private String cpf;
     private String endereco;
     private Integer pontuacao;
 
@@ -19,6 +20,7 @@ public class PessoaDTO {
         this.sexo = pessoa.getSexo();
         this.endereco = pessoa.getEndereco();
         this.pontuacao = pessoa.getPontuacao();
+        this.cpf = pessoa.getCpf();
     }
 
     public Long getId() {
@@ -39,6 +41,10 @@ public class PessoaDTO {
 
     public Integer getPontuacao() {
         return pontuacao;
+    }
+
+    public String getCpf() {
+        return cpf;
     }
 
 }

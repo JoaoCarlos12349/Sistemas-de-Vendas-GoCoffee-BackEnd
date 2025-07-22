@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -41,7 +40,8 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public List<Usuario> listaUsuarios(){
+    public List<Usuario> listaUsuarios() {
         return usuarioService.listarUsuarios();
     }
+
 }

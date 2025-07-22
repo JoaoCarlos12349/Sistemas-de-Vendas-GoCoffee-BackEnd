@@ -1,18 +1,19 @@
 package SVGoCoffee.SVGoCoffee.dto;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 import SVGoCoffee.SVGoCoffee.entities.Pedido;
 import SVGoCoffee.SVGoCoffee.entities.SituacaoMesa;
 
 public class PedidoDTO {
 
     private Long id;
-    private LocalDateTime data;
+    private Date data;
     private Integer mesa;
     private SituacaoMesa situacao;
     private Double valorTotal;
     private Integer pontos;
     private Long usuario_id;
+    private String formaPagamento;
 
     public PedidoDTO() {
     }
@@ -27,61 +28,41 @@ public class PedidoDTO {
         if (pedido.getUsuario() != null) {
             this.usuario_id = pedido.getUsuario().getId();
         }
+        this.formaPagamento = pedido.getFormaPagamento();
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getData() {
+    public Date getData() {
         return data;
-    }
-
-    public void setData(LocalDateTime data) {
-        this.data = data;
     }
 
     public Integer getMesa() {
         return mesa;
     }
 
-    public void setMesa(Integer mesa) {
-        this.mesa = mesa;
-    }
-
     public SituacaoMesa getSituacao() {
         return situacao;
-    }
-
-    public void setSituacao(SituacaoMesa situacao) {
-        this.situacao = situacao;
     }
 
     public Double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(Double valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
     public Integer getPontos() {
         return pontos;
-    }
-
-    public void setPontos(Integer pontos) {
-        this.pontos = pontos;
     }
 
     public Long getUsuario_id() {
         return usuario_id;
     }
 
-    public void setUsuario_id(Long usuario_id) {
-        this.usuario_id = usuario_id;
+    public String getFormaPagamento() {
+        return formaPagamento;
     }
+    
+
+   
 }

@@ -1,7 +1,5 @@
 package SVGoCoffee.SVGoCoffee.dto;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import SVGoCoffee.SVGoCoffee.entities.Produto;
 
 public class ProdutoDTO {
@@ -10,6 +8,9 @@ public class ProdutoDTO {
     private Double preco;
     private String categoria;
     private String imagem;
+    private Integer estoque;
+    private boolean situacao;
+    private String observacao;
 
     public ProdutoDTO() {
     }
@@ -20,6 +21,22 @@ public class ProdutoDTO {
         this.preco = produto.getPreco();
         this.categoria = produto.getCategoria();
         this.imagem = produto.getImagem();
+        this.estoque = produto.getEstoque();
+        this.observacao =produto.getObservacao();
+        this.situacao = produto.isSituacao();
+    }
+    
+
+    public Integer getEstoque() {
+        return estoque;
+    }
+
+    public boolean isSituacao() {
+        return situacao;
+    }
+
+    public String getObservacao() {
+        return observacao;
     }
 
     public Long getId() {

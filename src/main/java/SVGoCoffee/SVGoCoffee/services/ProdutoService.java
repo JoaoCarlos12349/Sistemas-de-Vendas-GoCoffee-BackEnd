@@ -50,6 +50,9 @@ public class ProdutoService {
         produto.setNome(dto.getNome());
         produto.setPreco(dto.getPreco());
         produto.setCategoria(dto.getCategoria());
+        produto.setEstoque(dto.getEstoque());
+        produto.setObservacao(dto.getObservacao());
+        produto.setSituacao(dto.isSituacao());
         Produto salvo = produtoRepository.save(produto);
         return new ProdutoDTO(salvo);
     }
@@ -68,6 +71,9 @@ public class ProdutoService {
         produto.setNome(dto.getNome());
         produto.setPreco(dto.getPreco());
         produto.setCategoria(dto.getCategoria());
+        produto.setEstoque(dto.getEstoque());
+        produto.setObservacao(dto.getObservacao());
+        produto.setSituacao(dto.isSituacao());
 
         Produto atualizado = produtoRepository.save(produto);
         return new ProdutoDTO(atualizado);

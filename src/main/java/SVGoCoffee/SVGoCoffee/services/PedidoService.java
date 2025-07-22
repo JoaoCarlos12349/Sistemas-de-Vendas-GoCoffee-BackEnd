@@ -37,13 +37,15 @@ public class PedidoService {
 
         Usuario usuario = usuarioRepository.findById(pedidoDTO.getUsuario_id())
                 .orElseThrow(
-                        () -> new EntityNotFoundException("Usuario não encontrado com ID: " + pedidoDTO.getUsuario_id()));
+                        () -> new EntityNotFoundException(
+                                "Usuario não encontrado com ID: " + pedidoDTO.getUsuario_id()));
 
         Pedido pedido = new Pedido();
         pedido.setData(pedidoDTO.getData());
         pedido.setMesa(pedidoDTO.getMesa());
         pedido.setUsuario(usuario);
         pedido.setPontos(pedidoDTO.getPontos());
+        pedido.setFormaPagamento(pedidoDTO.getFormaPagamento());
 
         // Pedido começa sempre esperando confirmação dos funcionários para produção
         pedido.setSituacao(SituacaoMesa.EsperandoConfirmacao);
@@ -60,7 +62,10 @@ public class PedidoService {
 
         Usuario usuario = usuarioRepository.findById(pedidoDTO.getUsuario_id())
                 .orElseThrow(
-                        () -> new EntityNotFoundException("Usuario não encontrado com ID: " + pedidoDTO.getUsuario_id()));
+                        () -> new EntityNotFoundException(
+                                "Usuario não encontrado com ID: " + pedidoDTO.getUsuario_id()));
+
+
 
         pedido.setData(pedidoDTO.getData());
         pedido.setMesa(pedidoDTO.getMesa());
@@ -68,6 +73,7 @@ public class PedidoService {
         pedido.setPontos(pedidoDTO.getPontos());
         pedido.setSituacao(pedidoDTO.getSituacao());
         pedido.setValorTotal(pedidoDTO.getValorTotal());
+        pedido.setFormaPagamento(pedidoDTO.getFormaPagamento());
 
         Pedido pedidoAtualizado = pedidoRepository.save(pedido);
         return new PedidoDTO(pedidoAtualizado);
@@ -80,5 +86,5 @@ public class PedidoService {
         }
         pedidoRepository.deleteById(id);
     }
-    
+
 }

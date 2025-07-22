@@ -1,6 +1,6 @@
 package SVGoCoffee.SVGoCoffee.entities;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "tb_pedido")
@@ -20,8 +22,8 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private LocalDateTime data;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date data;
 
     @Column(nullable = false)
     private Integer mesa;
@@ -34,6 +36,9 @@ public class Pedido {
     private Double valorTotal;
 
     @Column(nullable = false)
+    private String formaPagamento;
+
+    @Column(nullable = false)
     private Integer pontos;
 
     @ManyToOne
@@ -43,13 +48,14 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(Long id, LocalDateTime data, Integer mesa, SituacaoMesa situacao, Double valorTotal, Integer pontos,
-            Usuario usuario) {
+    public Pedido(Long id, Date data, Integer mesa, SituacaoMesa situacao, Double valorTotal, String formaPagamento,
+            Integer pontos, Usuario usuario) {
         this.id = id;
         this.data = data;
         this.mesa = mesa;
         this.situacao = situacao;
         this.valorTotal = valorTotal;
+        this.formaPagamento = formaPagamento;
         this.pontos = pontos;
         this.usuario = usuario;
     }
@@ -60,14 +66,6 @@ public class Pedido {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDateTime getData() {
-        return data;
-    }
-
-    public void setData(LocalDateTime data) {
-        this.data = data;
     }
 
     public Integer getMesa() {
@@ -108,5 +106,21 @@ public class Pedido {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public String getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(String formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
     }
 }
